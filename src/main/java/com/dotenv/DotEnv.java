@@ -1,29 +1,30 @@
 package com.dotenv;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Map;
 
 public class DotEnv {
 
-	private Map<String, String> params;
+	private static final String DOT_ENV_FILENAME = ".env";
+	private Map<String, String> params = new HashMap<String, String>();
 
-	private DotEnv() {
+	public DotEnv() {
 		super();
-		params = new HashMap<String, String>();
+		loadParams("");
 	}
-
-	public static DotEnv load(String path) {
-		DotEnv env = new DotEnv();
-		env.loadParams(path);
-		return env;
+	
+	public DotEnv(String path) {
+		super();
+		loadParams(path);
 	}
 
 	private void loadParams(String path) {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(path));
+			br = new BufferedReader(new FileReader(path+File.separator+DOT_ENV_FILENAME));
 			String line = null;
 			while(true) {
 				line = br.readLine();
