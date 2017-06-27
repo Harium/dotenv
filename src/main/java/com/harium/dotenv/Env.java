@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class Env {
 
+    public static boolean DEBUG = false;
+
     private static final String DOT_ENV_FILENAME = ".env";
     private static Map<String, String> params = new HashMap<>();
 
@@ -21,6 +23,9 @@ public class Env {
         File f = new File(path);
 
         if (!f.exists()) {
+            if (DEBUG) {
+                System.err.println("File not found: " + path);
+            }
             return;
         } else {
             System.out.println("Loading .ENV: " + path);
