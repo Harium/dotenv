@@ -14,26 +14,31 @@ public class Env {
     private static Map<String, String> params = new HashMap<>();
 
     static {
-        String dir = System.getProperty("user.dir");
-        loadParams(dir);
+        String path = System.getProperty("user.dir");
+        loadParams(path);
     }
 
-    public static void loadParams(String dir) {
-        String path = dir + File.separator + DOT_ENV_FILENAME;
-        File f = new File(path);
+    public static void loadParams(String path) {
+        String dir = path + File.separator + DOT_ENV_FILENAME;
+        File file = new File(dir);
+        loadParams(file);
+    }
 
-        if (!f.exists()) {
+    public static void loadParams(File file) {
+        if (!file.exists()) {
             if (DEBUG) {
-                System.err.println("File not found: " + path);
+                System.err.println("File not found: " + file.getAbsolutePath());
             }
             return;
         } else {
-            System.out.println("Loading .ENV: " + path);
+            if (DEBUG) {
+                System.out.println("Loading params from: " + file.getAbsolutePath());
+            }
         }
 
         BufferedReader br = null;
         try {
-            br = new BufferedReader(new FileReader(f));
+            br = new BufferedReader(new FileReader(file));
 
             while (true) {
                 String line = br.readLine();
@@ -57,11 +62,18 @@ public class Env {
 
     private static void parseLine(String line) {
         String[] parts = line.split("=");
-        params.put(fix(parts[0]), fix(parts[1]));
+        if (parts.length < 2) {
+            return;
+        }
+        addParam(parts[0], parts[1]);
     }
 
     public static String fix(String value) {
         return value.trim();
+    }
+
+    public static void addParam(String key, String value) {
+        params.put(fix(key), fix(value));
     }
 
     public static String get(String key) {
