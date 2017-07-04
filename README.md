@@ -1,12 +1,12 @@
-# dotenv
-A DotEnv to Java Applications
+# dotenv [![Build Status](https://travis-ci.org/Harium/dotenv.svg?branch=master)](https://travis-ci.org/Harium/dotenv)
+An utility tool to handle .env files in Java
 
 ## Maven
 ```
 <dependency>
   <groupId>com.harium</groupId>
   <artifactId>dotenv</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 </dependency>
 ```
 
