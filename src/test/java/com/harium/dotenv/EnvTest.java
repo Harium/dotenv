@@ -10,4 +10,14 @@ public class EnvTest {
         Assert.assertEquals("WORLD", Env.get("HELLO"));
     }
 
+    @Test
+    public void testEmptyParams() {
+        Assert.assertNull(Env.get("UNDEFINED"));
+    }
+
+    @Test
+    public void testAvoidComments() {
+       Assert.assertNull(Env.get("#COMMENT"));
+    }
+
 }
