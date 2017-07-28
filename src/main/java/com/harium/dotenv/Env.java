@@ -61,6 +61,10 @@ public class Env {
     }
 
     private static void parseLine(String line) {
+        // Ignore comments
+        if (line.startsWith("#")) {
+            return;
+        }
         String[] parts = line.split("=");
         if (parts.length < 2) {
             return;
