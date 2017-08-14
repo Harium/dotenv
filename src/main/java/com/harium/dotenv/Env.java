@@ -66,9 +66,12 @@ public class Env {
             return;
         }
         String[] parts = line.split("=");
+
         if (parts.length < 2) {
+            addParam(parts[0], "");
             return;
         }
+
         addParam(parts[0], parts[1]);
     }
 

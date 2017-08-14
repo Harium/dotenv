@@ -12,7 +12,7 @@ public class EnvTest {
 
     @Test
     public void testEmptyParams() {
-        Assert.assertNull(Env.get("UNDEFINED"));
+        Assert.assertEquals("", Env.get("UNDEFINED"));
     }
 
     @Test
