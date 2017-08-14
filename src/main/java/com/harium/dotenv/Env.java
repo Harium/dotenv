@@ -72,7 +72,7 @@ public class Env {
         addParam(parts[0], parts[1]);
     }
 
-    public static String fix(String value) {
+    private static String fix(String value) {
         return value.trim();
     }
 
