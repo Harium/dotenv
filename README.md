@@ -6,14 +6,20 @@ An utility tool to handle .env files in Java
 <dependency>
   <groupId>com.harium</groupId>
   <artifactId>dotenv</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
 ## How to use it
 Add a .env file to your current path (dotenv tries to load a file in System.getProperty("user.dir"));
 
-You can see an example file [here](https://raw.githubusercontent.com/Harium/dotenv/master/src/main/.env)
+Get your values using:
+  ```
+  String myValue = Env.get(your_variable);
+  ```
+
+
+You can see an example file [here](https://github.com/Harium/dotenv/blob/master/.env).
 
 ## Debug Information
 If you need more information about the library in runtime, just call:
