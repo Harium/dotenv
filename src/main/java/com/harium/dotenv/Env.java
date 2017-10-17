@@ -10,6 +10,7 @@ public class Env {
 
     public static boolean DEBUG = false;
 
+    private static final String SEPARATOR = "=";
     private static final String DOT_ENV_FILENAME = ".env";
     private static Map<String, String> params = new HashMap<>();
 
@@ -62,10 +63,10 @@ public class Env {
 
     private static void parseLine(String line) {
         // Ignore comments
-        if (line.startsWith("#")) {
+        if (!line.contains(SEPARATOR)) {
             return;
         }
-        String[] parts = line.split("=");
+        String[] parts = line.split(SEPARATOR);
 
         if (parts.length < 2) {
             addParam(parts[0], "");
@@ -76,11 +77,19 @@ public class Env {
     }
 
     private static String fix(String value) {
-        return value.trim();
+        String fixed = value.trim();
+        if (fixed.startsWith("#")) {
+            return "";
+        }
+        return fixed;
     }
 
     public static void addParam(String key, String value) {
-        params.put(fix(key), fix(value));
+        String fixedKey = fix(key);
+        if (fixedKey.isEmpty()) {
+            return;
+        }
+        params.put(fixedKey, fix(value));
     }
 
     public static String get(String key) {

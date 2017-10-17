@@ -20,4 +20,14 @@ public class EnvTest {
        Assert.assertNull(Env.get("#COMMENT"));
     }
 
+    @Test
+    public void testAvoidCommentsAfterSpace() {
+        Assert.assertNull("", Env.get("#OTHER_COMMENT"));
+    }
+
+    @Test
+    public void testAvoidCommentsInValue() {
+        Assert.assertEquals("", Env.get("EMPTY_VALUE"));
+    }
+
 }
