@@ -20,7 +20,11 @@ public class Env {
     }
 
     public static void loadParams(String path) {
-        String dir = path + File.separator + DOT_ENV_FILENAME;
+        loadParams(path, DOT_ENV_FILENAME);
+    }
+
+    public static void loadParams(String path, String filename) {
+        String dir = path + File.separator + filename;
         File file = new File(dir);
         loadParams(file);
     }
