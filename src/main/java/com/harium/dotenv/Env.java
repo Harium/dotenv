@@ -20,6 +20,11 @@ public class Env {
     private static String path = System.getProperty("user.dir");
     private static boolean loaded = false;
 
+    private static ErrorListener errorListener = new ErrorListener() {
+        @Override
+        public void onError(Throwable e) {}
+    };
+
     private Env(String path) {
         params.clear();
         loaded = false;
@@ -27,6 +32,11 @@ public class Env {
     }
 
     public static Env path(String path) {
+        return new Env(path);
+    }
+
+    public static Env errorListener(ErrorListener errorListener) {
+        Env.errorListener = errorListener;
         return new Env(path);
     }
 
@@ -58,7 +68,8 @@ public class Env {
                 parseLine(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            // Cannot find .env file
+            errorListener.onError(e);
         }
     }
 
@@ -95,6 +106,10 @@ public class Env {
             return "";
         }
         return trimmed;
+    }
+
+    public interface ErrorListener {
+        void onError(Throwable e);
     }
 
 }
