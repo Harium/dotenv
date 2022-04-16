@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.harium</groupId>
     <artifactId>dotenv</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
     <name>dotenv</name>
     <description>An utility tool to handle .env files in Java</description>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
