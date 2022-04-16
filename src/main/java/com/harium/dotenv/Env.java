@@ -15,24 +15,35 @@ public class Env {
     private static final String SEPARATOR = "=";
     private static final String DOT_ENV_FILENAME = ".env";
 
-    private static Map<String, String> params = new HashMap<>();
-
     private static String path = System.getProperty("user.dir");
     private static boolean loaded = false;
+    static Map<String, String> params = new HashMap<>();
 
+    // Dummy Error Listener
     private static ErrorListener errorListener = new ErrorListener() {
         @Override
         public void onError(Throwable e) {}
     };
 
     private Env(String path) {
-        params.clear();
-        loaded = false;
         loadParams(path);
     }
 
+    /**
+     * Method to change the .env path
+     * @param path
+     * @return
+     */
     public static Env path(String path) {
+        if (!Env.path.equals(path)) {
+            clearVariables();
+        }
         return new Env(path);
+    }
+
+    private static void clearVariables() {
+        params.clear();
+        loaded = false;
     }
 
     public static Env errorListener(ErrorListener errorListener) {
@@ -41,10 +52,7 @@ public class Env {
     }
 
     public static String get(String key) {
-        if (!loaded) {
-            loadParams(path);
-            loaded = true;
-        }
+        loadParams(path);
 
         String value = params.get(key);
         if (value != null) {
@@ -55,13 +63,15 @@ public class Env {
     }
 
     private static void loadParams(String path) {
+        if (loaded) {
+            return;
+        }
         loadParams(path, DOT_ENV_FILENAME);
+        loaded = true;
     }
 
     private static void loadParams(String path, String filename) {
-        String dir = path + File.separator + filename;
-
-        Path p = Paths.get(dir);
+        Path p = Paths.get(path, filename);
         try {
             List<String> lines = Files.readAllLines(p, StandardCharsets.UTF_8);
             for (String line : lines) {
@@ -84,7 +94,9 @@ public class Env {
 
         String[] parts = trimmed.split(SEPARATOR);
 
-        if (parts.length < 2) {
+        if (parts.length < 1) {
+            return;
+        } else if (parts.length < 2) {
             addParam(parts[0], "");
             return;
         }

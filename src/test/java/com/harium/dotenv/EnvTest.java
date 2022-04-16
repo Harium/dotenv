@@ -30,4 +30,13 @@ public class EnvTest {
         Assert.assertEquals("", Env.get("EMPTY_VALUE"));
     }
 
+    @Test
+    public void testReInit() {
+        Env.params.put("KEY1", "val1");
+        Assert.assertEquals("val1", Env.get("KEY1"));
+
+        Env.path("/home");
+        Assert.assertNull(Env.get("KEY1"));
+    }
+
 }
