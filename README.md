@@ -9,7 +9,7 @@ An utility tool to handle .env files in Java.
 <dependency>
   <groupId>com.harium</groupId>
   <artifactId>dotenv</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
 </dependency>
 ```
 
